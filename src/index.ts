@@ -1,18 +1,15 @@
 /**
  * WFSL Org Profile Guard
- * Uses wfsl-control-plane for deterministic governance execution.
+ * Delegates governance execution to wfsl-control-plane.
  */
 
-import controlPlane from "wfsl-control-plane";
+import { execute } from "wfsl-control-plane";
 import fs from "fs";
 
 function runVerification(evidencePath: string) {
   const raw = fs.readFileSync(evidencePath, "utf-8");
   const command = JSON.parse(raw);
-
-  const evidence = controlPlane.execute(command);
-
-  return evidence;
+  return execute(command);
 }
 
 const args = process.argv.slice(2);
