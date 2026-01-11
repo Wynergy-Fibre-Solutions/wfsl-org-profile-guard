@@ -1,7 +1,7 @@
 {
   "name": "wfsl-org-profile-guard",
-  "version": "0.1.0",
-  "description": "WFSL Organisation Profile Guard: deterministic org profile drift detection with evidence and optional cryptographic sealing.",
+  "version": "0.2.0",
+  "description": "WFSL Organisation Profile Guard: deterministic org profile drift detection with cryptographic evidence sealing and offline verification.",
   "private": true,
   "type": "module",
   "main": "dist/index.js",
@@ -9,7 +9,8 @@
     "clean": "node -e \"try{require('fs').rmSync('dist',{recursive:true,force:true})}catch(e){}\"",
     "build": "tsc -p tsconfig.json",
     "check": "npm run build && node dist/index.js",
-    "check:strict": "npm run build && node dist/index.js --strict"
+    "check:strict": "npm run build && node dist/index.js --strict",
+    "verify": "node dist/index.js --verify evidence/org-profile-check.json"
   },
   "dependencies": {
     "@octokit/graphql": "^8.0.1",
