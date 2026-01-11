@@ -8,7 +8,7 @@
     "verify": "node dist/index.js --verify evidence/org-profile-check.json"
   },
   "dependencies": {
-    "wfsl-control-plane": "github:Wynergy-Fibre-Solutions/wfsl-control-plane#v1.0.1"
+    "wfsl-control-plane": "github:Wynergy-Fibre-Solutions/wfsl-control-plane#v1.1.0"
   },
   "author": "Wynergy Fibre Solutions Ltd",
   "license": "ISC",
