@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execute } from "wfsl-control-plane";
-import { appendAnchorEntry, verifyAnchorLog } from "./anchor";
+import { appendAnchorEntry, verifyAnchorLog } from "./anchor/index";
 
 type Args = {
   evidenceFile?: string;
@@ -61,7 +61,11 @@ function readJson(filePath: string): unknown {
 
 function writeJson(filePath: string, data: unknown): void {
   ensureDirForFile(filePath);
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2) + "\n", "utf8");
+  fs.writeFileSync(
+    filePath,
+    JSON.stringify(data, null, 2) + "\n",
+    "utf8"
+  );
 }
 
 function runControlPlaneVerification(evidencePath: string): unknown {
@@ -81,11 +85,11 @@ function main(): void {
     process.exit(res.ok ? 0 : 2);
   }
 
-  // Backward-compatible behaviour: default to --verify evidence/org-profile-check.json
-  const evidencePath = args.evidenceFile ?? "evidence/org-profile-check.json";
+  // Backward-compatible behaviour
+  const evidencePath =
+    args.evidenceFile ?? "evidence/org-profile-check.json";
 
   if (!args.doVerify && !args.doAnchor) {
-    // Preserve existing UX if user runs the old script.
     const out = runControlPlaneVerification(evidencePath);
     console.log(JSON.stringify(out, null, 2));
     return;
@@ -100,11 +104,10 @@ function main(): void {
   if (args.doAnchor) {
     const out = runControlPlaneVerification(evidencePath);
 
-    // Emit evidence result first, then anchor result. Both are facts.
     console.log(JSON.stringify(out, null, 2));
 
-    // Persist the evidence result as an artefact for anchoring and later audit.
-    const emittedEvidencePath = "evidence/emitted/org-profile-check.emitted.json";
+    const emittedEvidencePath =
+      "evidence/emitted/org-profile-check.emitted.json";
     writeJson(emittedEvidencePath, out);
 
     const logPath = args.anchorLog ?? "evidence/ANCHOR_LOG.ndjson";
@@ -114,7 +117,13 @@ function main(): void {
       evidence: out
     });
 
-    console.log(JSON.stringify({ anchored: true, log: logPath, entry }, null, 2));
+    console.log(
+      JSON.stringify(
+        { anchored: true, log: logPath, entry },
+        null,
+        2
+      )
+    );
     return;
   }
 }
