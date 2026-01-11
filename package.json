@@ -1,24 +1,22 @@
 {
   "name": "wfsl-org-profile-guard",
   "version": "0.2.0",
-  "description": "WFSL Organisation Profile Guard: deterministic org profile drift detection with cryptographic evidence sealing and offline verification.",
-  "private": true,
-  "type": "module",
+  "description": "WFSL organisation profile validation and governance guard",
   "main": "dist/index.js",
   "scripts": {
-    "clean": "node -e \"try{require('fs').rmSync('dist',{recursive:true,force:true})}catch(e){}\"",
-    "build": "tsc -p tsconfig.json",
-    "check": "npm run build && node dist/index.js",
-    "check:strict": "npm run build && node dist/index.js --strict",
+    "build": "tsc",
     "verify": "node dist/index.js --verify evidence/org-profile-check.json"
   },
   "dependencies": {
-    "@octokit/graphql": "^8.0.1",
-    "js-yaml": "^4.1.0"
+    "wfsl-control-plane": "github:Wynergy-Fibre-Solutions/wfsl-control-plane#v1.0.0"
   },
-  "devDependencies": {
-    "@types/js-yaml": "^4.0.9",
-    "@types/node": "^22.0.0",
-    "typescript": "^5.6.0"
-  }
+  "keywords": [
+    "wfsl",
+    "governance",
+    "evidence",
+    "org-profile"
+  ],
+  "author": "Wynergy Fibre Solutions Ltd",
+  "license": "ISC",
+  "type": "commonjs"
 }
