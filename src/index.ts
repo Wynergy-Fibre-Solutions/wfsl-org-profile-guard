@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execute } from "wfsl-control-plane";
-import { appendAnchorEntry, verifyAnchorLog } from "./anchor/index";
+import { appendAnchorEntry, verifyAnchorLog } from "./anchor";
 
 type Args = {
   evidenceFile?: string;
@@ -70,8 +70,7 @@ function writeJson(filePath: string, data: unknown): void {
 
 function runControlPlaneVerification(evidencePath: string): unknown {
   const input = readJson(evidencePath);
-  const out = execute(input as any);
-  return out;
+  return execute(input as any);
 }
 
 function main(): void {
@@ -85,7 +84,6 @@ function main(): void {
     process.exit(res.ok ? 0 : 2);
   }
 
-  // Backward-compatible behaviour
   const evidencePath =
     args.evidenceFile ?? "evidence/org-profile-check.json";
 
@@ -124,7 +122,6 @@ function main(): void {
         2
       )
     );
-    return;
   }
 }
 
