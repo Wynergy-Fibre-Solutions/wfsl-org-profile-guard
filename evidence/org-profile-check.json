@@ -1,16 +1,13 @@
 {
-  "drift": {
-    "missing_pins": [
-      "wfsl-repo-guard",
-      "wfsl-route-sentinel"
-    ],
-    "profile_readme_missing": false,
-    "unexpected_pins": []
+  "meta": {
+    "engine": "wfsl-org-profile-guard",
+    "version": "0.2.0",
+    "mode": "community",
+    "org": "Wynergy-Fibre-Solutions",
+    "timestamp_utc": "2026-01-11T22:09:54.119Z"
   },
-  "integrity": {
-    "sha256": "15aee3219bd10a90c2f0a9affacf82ee4e65296ff2ef42b62a67d9b125c3c2fd"
-  },
-  "intent": {
+  "result": {
+    "status": "DRIFT",
     "expected_pins": [
       "wfsl-shell-guard",
       "wfsl-evidence-guard",
@@ -18,26 +15,21 @@
       "wfsl-repo-guard",
       "wfsl-route-sentinel"
     ],
-    "profile_readme_path": "profile/README.md",
-    "profile_readme_repo": ".github",
-    "profile_readme_required": true
-  },
-  "observed": {
-    "pinned_repos": [
+    "pinned": [
       "wfsl-evidence-guard",
       "wfsl-shell-guard",
       "wfsl-admission-guard"
     ],
-    "profile_readme_exists": true
+    "missing_pins": [
+      "wfsl-repo-guard",
+      "wfsl-route-sentinel"
+    ]
   },
-  "run": {
-    "org": "Wynergy-Fibre-Solutions",
-    "strict": false,
-    "utc": "2026-01-11T20:59:02.925Z"
-  },
-  "status": "DRIFT",
-  "tool": {
-    "name": "wfsl-org-profile-guard",
-    "version": "0.1.0"
+  "seal": {
+    "algorithm": "sha256",
+    "input_digest": "5c4578c331601b3a1c6a0dc8789947b0ff8c521864cd65b19c088712c5b0863c",
+    "evidence_digest": "648ec8a99dabc5d0f2d94c6b33bfd28c955cfa515f8dbc55e9f41cdb074e705f",
+    "previous_digest": null,
+    "chain_index": 1
   }
 }
