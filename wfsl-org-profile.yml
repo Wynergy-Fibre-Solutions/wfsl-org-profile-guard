@@ -1,0 +1,18 @@
+org: Wynergy-Fibre-Solutions
+
+profile:
+  expected_pins:
+    - wfsl-shell-guard
+    - wfsl-evidence-guard
+    - wfsl-admission-guard
+    - wfsl-repo-guard
+    - wfsl-route-sentinel
+
+  profile_readme:
+    required: true
+    repo: .github
+    path: profile/README.md
+
+evidence:
+  out_dir: evidence
+  out_file: org-profile-check.json

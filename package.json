@@ -1,0 +1,22 @@
+{
+  "name": "wfsl-org-profile-guard",
+  "version": "0.1.0",
+  "description": "Deterministic drift detector for GitHub organisation profile state (pins and profile README) with evidence JSON output.",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "ts-node --compiler-options \"{\\\"module\\\":\\\"CommonJS\\\"}\" src/index.ts",
+    "check:strict": "ts-node --compiler-options \"{\\\"module\\\":\\\"CommonJS\\\"}\" src/index.ts --strict"
+  },
+  "dependencies": {
+    "@octokit/graphql": "^8.2.2",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
