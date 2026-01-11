@@ -8,14 +8,8 @@
     "verify": "node dist/index.js --verify evidence/org-profile-check.json"
   },
   "dependencies": {
-    "wfsl-control-plane": "github:Wynergy-Fibre-Solutions/wfsl-control-plane#v1.0.0"
+    "wfsl-control-plane": "github:Wynergy-Fibre-Solutions/wfsl-control-plane#v1.0.1"
   },
-  "keywords": [
-    "wfsl",
-    "governance",
-    "evidence",
-    "org-profile"
-  ],
   "author": "Wynergy Fibre Solutions Ltd",
   "license": "ISC",
   "type": "commonjs"
