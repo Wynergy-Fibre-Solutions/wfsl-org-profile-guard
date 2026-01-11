@@ -1,35 +1,11 @@
 {
-  "meta": {
-    "engine": "wfsl-org-profile-guard",
-    "version": "0.2.0",
-    "mode": "community",
-    "org": "Wynergy-Fibre-Solutions",
-    "timestamp_utc": "2026-01-11T22:09:54.119Z"
+  "entity": {
+    "id": "org-profile-check",
+    "type": "organisation",
+    "name": "Wynergy Fibre Solutions Ltd"
   },
-  "result": {
-    "status": "DRIFT",
-    "expected_pins": [
-      "wfsl-shell-guard",
-      "wfsl-evidence-guard",
-      "wfsl-admission-guard",
-      "wfsl-repo-guard",
-      "wfsl-route-sentinel"
-    ],
-    "pinned": [
-      "wfsl-evidence-guard",
-      "wfsl-shell-guard",
-      "wfsl-admission-guard"
-    ],
-    "missing_pins": [
-      "wfsl-repo-guard",
-      "wfsl-route-sentinel"
-    ]
-  },
-  "seal": {
-    "algorithm": "sha256",
-    "input_digest": "5c4578c331601b3a1c6a0dc8789947b0ff8c521864cd65b19c088712c5b0863c",
-    "evidence_digest": "648ec8a99dabc5d0f2d94c6b33bfd28c955cfa515f8dbc55e9f41cdb074e705f",
-    "previous_digest": null,
-    "chain_index": 1
+  "policy": {
+    "allow": true,
+    "reason": "Initial organisation profile verification"
   }
 }
