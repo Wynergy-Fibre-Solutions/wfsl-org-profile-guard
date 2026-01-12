@@ -2,14 +2,22 @@ import fs from "node:fs";
 import path from "node:path";
 import { execute } from "wfsl-control-plane";
 import { appendAnchorEntry, verifyAnchorLog } from "./anchor";
+import { writeAnchorManifest } from "./manifest";
 
 type Args = {
   evidenceFile?: string;
   doVerify?: boolean;
+
   doAnchor?: boolean;
   anchorLog?: string;
+
   doVerifyLog?: boolean;
   verifyLogPath?: string;
+
+  doManifest?: boolean;
+  manifestPath?: string;
+
+  doWitness?: boolean;
 };
 
 function parseArgs(argv: string[]): Args {
@@ -44,6 +52,18 @@ function parseArgs(argv: string[]): Args {
       i++;
       continue;
     }
+
+    if (a === "--manifest") {
+      args.doManifest = true;
+      args.manifestPath = argv[i + 1];
+      i++;
+      continue;
+    }
+
+    if (a === "--witness") {
+      args.doWitness = true;
+      continue;
+    }
   }
 
   return args;
@@ -61,11 +81,7 @@ function readJson(filePath: string): unknown {
 
 function writeJson(filePath: string, data: unknown): void {
   ensureDirForFile(filePath);
-  fs.writeFileSync(
-    filePath,
-    JSON.stringify(data, null, 2) + "\n",
-    "utf8"
-  );
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2) + "\n", "utf8");
 }
 
 function runControlPlaneVerification(evidencePath: string): unknown {
@@ -73,7 +89,7 @@ function runControlPlaneVerification(evidencePath: string): unknown {
   return execute(input as any);
 }
 
-function main(): void {
+async function main(): Promise<void> {
   const argv = process.argv.slice(2);
   const args = parseArgs(argv);
 
@@ -84,10 +100,10 @@ function main(): void {
     process.exit(res.ok ? 0 : 2);
   }
 
-  const evidencePath =
-    args.evidenceFile ?? "evidence/org-profile-check.json";
+  // Default behaviour remains: verify the canonical evidence file and print output.
+  const evidencePath = args.evidenceFile ?? "evidence/org-profile-check.json";
 
-  if (!args.doVerify && !args.doAnchor) {
+  if (!args.doVerify && !args.doAnchor && !args.doManifest) {
     const out = runControlPlaneVerification(evidencePath);
     console.log(JSON.stringify(out, null, 2));
     return;
@@ -102,10 +118,10 @@ function main(): void {
   if (args.doAnchor) {
     const out = runControlPlaneVerification(evidencePath);
 
+    // Emit evidence result first, then anchor result.
     console.log(JSON.stringify(out, null, 2));
 
-    const emittedEvidencePath =
-      "evidence/emitted/org-profile-check.emitted.json";
+    const emittedEvidencePath = "evidence/emitted/org-profile-check.emitted.json";
     writeJson(emittedEvidencePath, out);
 
     const logPath = args.anchorLog ?? "evidence/ANCHOR_LOG.ndjson";
@@ -115,14 +131,27 @@ function main(): void {
       evidence: out
     });
 
-    console.log(
-      JSON.stringify(
-        { anchored: true, log: logPath, entry },
-        null,
-        2
-      )
-    );
+    console.log(JSON.stringify({ anchored: true, log: logPath, entry }, null, 2));
+    return;
+  }
+
+  if (args.doManifest) {
+    // Ensure we have an emitted artefact before sealing the manifest.
+    const out = runControlPlaneVerification(evidencePath);
+    const emittedEvidencePath = "evidence/emitted/org-profile-check.emitted.json";
+    writeJson(emittedEvidencePath, out);
+
+    const res = await writeAnchorManifest({
+      manifestPath: args.manifestPath ?? "evidence/ANCHOR_MANIFEST.json",
+      includeWitness: Boolean(args.doWitness)
+    });
+
+    console.log(JSON.stringify(res, null, 2));
+    return;
   }
 }
 
-main();
+main().catch((err) => {
+  console.error(String(err?.stack ?? err));
+  process.exit(1);
+});
