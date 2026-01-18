@@ -1,60 +1,13 @@
-\# WFSL Org Profile Guard
+# WFSL Org Profile Guard
 
+Execution guard that verifies organisational profile integrity before downstream workflows run.
 
+## What it does
 
-Deterministic drift detector for GitHub organisation profile state.
+Validates that an organisation profile meets declared governance and integrity expectations.
+Designed to fail fast and block execution when profile conditions are not met.
 
-
-
-GitHub does not provide a supported API to set pinned repositories. This guard treats the org profile as a governed surface by declaring intent and detecting drift.
-
-
-
-\## What it checks
-
-
-
-\- Pinned repositories (names only)
-
-\- Organisation profile README presence (`.github/profile/README.md`)
-
-
-
-\## Evidence
-
-
-
-Writes deterministic JSON evidence to:
-
-
-
-\- `./evidence/org-profile-check.json`
-
-
-
-Exit codes:
-
-
-
-\- `0` OK
-
-\- `1` DRIFT
-
-\- `2` ERROR
-
-
-
-\## Usage (PowerShell)
-
-
-
-Set a token:
-
-
+## How to run
 
 ```powershell
-
-$env:GITHUB\_TOKEN = gh auth token
-
-
-
+pwsh -NoProfile -ExecutionPolicy Bypass -File .\wfsl-org-profile-guard.ps1
