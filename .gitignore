@@ -1,21 +1,2 @@
-# Dependencies
-node_modules/
-
-# Build output
-dist/
-
-# Evidence output
-evidence/*.json
-
-# Environment
-.env
-.env.*
-
-# Logs
-*.log
-
-# OS / editor noise
-.vscode/
-.history/
-.DS_Store
-Thumbs.db
+# Runtime evidence (never committed)
+evidence/
