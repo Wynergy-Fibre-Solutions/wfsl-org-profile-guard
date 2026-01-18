@@ -1,2 +1,5 @@
 # Runtime evidence (never committed)
 evidence/
+
+# Build output
+dist/
